@@ -1,57 +1,41 @@
-// import React from "react";
-// import "./App.css";
-
-// function App() {
-//   const [count, setCount] = React.useState(0);
-//   return (
-//     <>
-//      <span>hello</span>
-//       <Button counter={count} setCounter={setCount}></Button>
-//     </>
-//   );
-// }
-
-// function Button(props) {
-//   return (
-//     <button
-//     className="buttonfont"
-//       onClick={() => {
-//         props.setCounter(props.counter+1);
-
-//       }}
-//     >Counter {props.counter}</button>
-//   );
-// }
-
-// Toggle messages .
-
-import { React, use, useState } from "react";
-import "./App.css";
+import { useState } from "react";
+import { PostComponent } from "./postComponent";
 
 function App() {
-  return (
-    <>
-      <Button> </Button>
-      <Button> </Button>
-      <Button> </Button>
-    </>
-  );
-}
+  const [posts, setPosts] = useState([]);
 
-function Button() {
-  const [count, setCount] = useState(0);
-  const [istrue, setIstrue] = useState(false);
+  const postComponents = posts.map((post) => (
+    <PostComponent
+      name={post.name}
+      subtitle={post.subtitle}
+      time={post.title}
+      image={post.image}
+      description={post.description}
+    />
+  ));
+
+  function addPost() {
+    setPosts([
+      ...posts,
+      {
+        name: "harkirat",
+        subtitle: "10000 followers",
+        time: "2m ago",
+        image:
+          "https://appx-wsb-gcp-mcdn.akamai.net.in/subject/2023-01-17-0.17044360120951185.jpg",
+        description:
+          "What to know how to win big? Check out how these folks won $6000 in bounties.",
+      },
+    ]);
+  }
 
   return (
-    <button
-      className={`${istrue ? "redColor" : "blueColor"}`}
-      onClick={() => {
-        setCount(count + 1);
-        setIstrue(!istrue);
-      }}
-    >
-      counter {count}
-    </button>
+    <div style={{ background: "#dfe6e9", height: "100vh" }}>
+      <button onClick={addPost}>Add post</button>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <div>{postComponents}</div>
+      </div>
+    </div>
   );
 }
 
