@@ -1,11 +1,12 @@
-.buttonfont{
-  color: aqua;
-}
-
-.redColor{
-  color: red
-}
-
-.blueColor{
-  color:blue ;
+.divstyle {
+  position: 'fixed';
+            top: 0;
+            left:0 ;
+            right: 0;
+            bottom: 0;
+            background-color: #A5D6F4;
+            display: 'flex';
+            justify-content: 'center';
+            align-Items: 'center';
+            padding: 10px;
 }
