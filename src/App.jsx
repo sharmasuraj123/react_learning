@@ -1,34 +1,26 @@
-import React, { useState, useEffect } from "react";
-
-// Boundary error
-
-class BoundaryError extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { havaAerror: false };
-  }
-
-  static getDerivedStateFromError(error) {
-    return { havaAerror: true };
-  }
-
-  render() {
-    if (this.tate.havaAerror) {
-      return <div>Something went wrong.</div>;
-    } else return this.props.children;
-  }
-}
+import React, { useState } from "react";
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { Landing } from "../component/landing";
+import { Lacation } from "../component/lacation";
+import { Language } from "../component/language";
+import { Name } from "../component/name";
 
 function App() {
   return (
-    <BoundaryError>
-      <ErrorComponent></ErrorComponent>
-    </BoundaryError>
+    <>
+      <BrowserRouter>
+        <Link to="/">hello !</Link>|<Link to="/location">lacation</Link>|
+        <Link to="/language">Language</Link>
+        <br />
+        <br />
+        <Routes>
+          <Route index element={<Name />}></Route>
+          <Route path="/location" element={<Lacation />}></Route>
+          <Route path="/language" element={<Language />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </>
   );
-}
-
-function ErrorComponent() {
-  throw new Error("i caught a erroror.");
 }
 
 export default App;
