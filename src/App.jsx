@@ -4,6 +4,7 @@ import { Landing } from "../component/landing";
 import { Lacation } from "../component/lacation";
 import { Language } from "../component/language";
 import { Name } from "../component/name";
+import { Layout } from "../component/outlet";
 
 function App() {
   return (
@@ -14,9 +15,11 @@ function App() {
         <br />
         <br />
         <Routes>
-          <Route index element={<Name />}></Route>
-          <Route path="/location" element={<Lacation />}></Route>
-          <Route path="/language" element={<Language />}></Route>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Name />}></Route>
+            <Route path="/location" element={<Lacation />}></Route>
+            <Route path="/language" element={<Language />}></Route>
+          </Route>
         </Routes>
       </BrowserRouter>
     </>
