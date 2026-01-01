@@ -1,37 +1,58 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 
-function Timer() {
-  const [time, setTime] = useState(0);
-  const reference = useRef(null);
+const countContext = createContext();
 
-  // useEffect(() => {
-  //   reference.current = setInterval(() => {
-  //     setTime((current) => current + 1);
-  //   }, 1000);
-  // }, []);
+function CountContextProvider({ children }) {
+  const [count, setCount] = useState(0);
 
   return (
-    <>
-      <h1>Timer: {time}</h1>
-      <button
-        id="start"
-        onClick={() => {
-          reference.current = setInterval(() => {
-            setTime((current) => current + 1);
-          }, 1000);
-        }}
-      >
-        start
-      </button>
-      <button
-        id="stop"
-        onClick={() => {
-          clearInterval(reference.current);
-        }}
-      >
-        stop
-      </button>
-    </>
+    <countContext.Provider value={{ count, setCount }}>
+      {children}
+    </countContext.Provider>
   );
 }
-export default Timer;
+
+function Increase() {
+  const { count, setCount } = useContext(countContext);
+
+  return (
+    <button
+      onClick={() => {
+        setCount((current) => current + 1);
+      }}
+    >
+      Increase
+    </button>
+  );
+}
+
+function Decrease() {
+  const { count, setCount } = useContext(countContext);
+
+  return (
+    <button
+      onClick={() => {
+        setCount((current) => current - 1);
+      }}
+    >
+      Decrease
+    </button>
+  );
+}
+
+function Value() {
+  const { count, setCount } = useContext(countContext);
+
+  return <div>{count}</div>;
+}
+function App() {
+  return (
+    <CountContextProvider>
+      <Increase />
+      <Decrease />
+      <Value />
+    </CountContextProvider>
+  );
+}
+
+export default App;
