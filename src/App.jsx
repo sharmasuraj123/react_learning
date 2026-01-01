@@ -1,22 +1,37 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 
-function App() {
+function Timer() {
+  const [time, setTime] = useState(0);
   const reference = useRef(null);
+
+  // useEffect(() => {
+  //   reference.current = setInterval(() => {
+  //     setTime((current) => current + 1);
+  //   }, 1000);
+  // }, []);
 
   return (
     <>
-      <input
-        ref={reference}
-        type="text"
-        placeholder="write what yu want "
-      ></input>
+      <h1>Timer: {time}</h1>
       <button
+        id="start"
         onClick={() => {
-          reference.current.focus();
+          reference.current = setInterval(() => {
+            setTime((current) => current + 1);
+          }, 1000);
         }}
-      >click</button>
+      >
+        start
+      </button>
+      <button
+        id="stop"
+        onClick={() => {
+          clearInterval(reference.current);
+        }}
+      >
+        stop
+      </button>
     </>
   );
 }
-
-export default App;
+export default Timer;
