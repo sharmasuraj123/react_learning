@@ -1,57 +1,51 @@
-import React, { createContext, useContext, useState } from "react";
+// custom hooks
 
-const countContext = createContext();
+import { useState } from "react";
+import { useFetch } from "../hooks/useFetch.js";
 
-function CountContextProvider({ children }) {
-  const [count, setCount] = useState(0);
+// import usePostTitle from "../hooks/usePostTitle";
 
-  return (
-    <countContext.Provider value={{ count, setCount }}>
-      {children}
-    </countContext.Provider>
-  );
-}
+// function App() {
+//   const  post  = usePostTitle();
+//   return <div>{post}</div>;
+// }
 
-function Increase() {
-  const { count, setCount } = useContext(countContext);
+// useFetch custom hooks.
 
-  return (
-    <button
-      onClick={() => {
-        setCount((current) => current + 1);
-      }}
-    >
-      Increase
-    </button>
-  );
-}
-
-function Decrease() {
-  const { count, setCount } = useContext(countContext);
-
-  return (
-    <button
-      onClick={() => {
-        setCount((current) => current - 1);
-      }}
-    >
-      Decrease
-    </button>
-  );
-}
-
-function Value() {
-  const { count, setCount } = useContext(countContext);
-
-  return <div>{count}</div>;
-}
 function App() {
+  const [currentPost, setcurrentPost] = useState(1);
+  const { post, loader } = useFetch(
+    "https://jsonplaceholder.typicode.com/todos/" + currentPost,
+    10 * 1000
+  );
+  if (loader) {
+    return <div>loading...</div>;
+  }
   return (
-    <CountContextProvider>
-      <Increase />
-      <Decrease />
-      <Value />
-    </CountContextProvider>
+    <>
+      <button
+        onClick={() => {
+          setcurrentPost(1);
+        }}
+      >
+        1
+      </button>
+      <button
+        onClick={() => {
+          setcurrentPost(2);
+        }}
+      >
+        2
+      </button>
+      <button
+        onClick={() => {
+          setcurrentPost(3);
+        }}
+      >
+        3
+      </button>
+      <div>{JSON.stringify(post)}</div>
+    </>
   );
 }
 
