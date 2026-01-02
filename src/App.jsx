@@ -1,52 +1,22 @@
-// custom hooks
-
+import { usePrev } from "../hooks/usePrev";
 import { useState } from "react";
-import { useFetch } from "../hooks/useFetch.js";
-
-// import usePostTitle from "../hooks/usePostTitle";
-
-// function App() {
-//   const  post  = usePostTitle();
-//   return <div>{post}</div>;
-// }
-
-// useFetch custom hooks.
-
 function App() {
-  const [currentPost, setcurrentPost] = useState(1);
-  const { post, loader } = useFetch(
-    "https://jsonplaceholder.typicode.com/todos/" + currentPost,
-    10 * 1000
-  );
-  if (loader) {
-    return <div>loading...</div>;
-  }
+  const [count, setCount] = useState(0);
+  const prevCount = usePrev(count); // Track the previous count value
+
   return (
-    <>
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1>Counter with usePrev Hook</h1>
+      <p>Current Count: {count}</p>
+      <p>Previous Count: {prevCount}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
       <button
-        onClick={() => {
-          setcurrentPost(1);
-        }}
+        onClick={() => setCount(count - 1)}
+        style={{ marginLeft: "10px" }}
       >
-        1
+        Decrement
       </button>
-      <button
-        onClick={() => {
-          setcurrentPost(2);
-        }}
-      >
-        2
-      </button>
-      <button
-        onClick={() => {
-          setcurrentPost(3);
-        }}
-      >
-        3
-      </button>
-      <div>{JSON.stringify(post)}</div>
-    </>
+    </div>
   );
 }
-
 export default App;
