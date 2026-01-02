@@ -1,22 +1,31 @@
-import { usePrev } from "../hooks/usePrev";
-import { useState } from "react";
-function App() {
-  const [count, setCount] = useState(0);
-  const prevCount = usePrev(count); // Track the previous count value
+import useDebounce from "../hooks/useDebounce";
+import { useEffect,useState } from "react";
 
+function App() {
+  const[inputValue,setInputValue] = useState("");
+  const DebounceValue = useDebounce(inputValue, 300);
+  useEffect(() => {
+     if (!DebounceValue) return;
+    async function senddata() {
+      const data = await fetch(
+        "api.amazon.com/search/" 
+      );
+      console.log("hello")
+      
+    }
+    senddata();
+  }, [DebounceValue]);
+
+  
+ function Change(e){
+  setInputValue(e.target.value)
+ }
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Counter with usePrev Hook</h1>
-      <p>Current Count: {count}</p>
-      <p>Previous Count: {prevCount}</p>
-      <button onClick={() => setCount(count + 1)}>Increment</button>
-      <button
-        onClick={() => setCount(count - 1)}
-        style={{ marginLeft: "10px" }}
-      >
-        Decrement
-      </button>
-    </div>
+    <>
+      <input type="text"  onChange={Change} />
+      
+    </>
   );
 }
+
 export default App;
